@@ -23,8 +23,8 @@ export function Trial() {
 					return html;
 				},
 				choices: "NO_KEYS",
-				// trial_duration: 2000,
-				trial_duration: jsPsych.timelineVariable("t"),
+				trial_duration: 2000,
+				// trial_duration: jsPsych.timelineVariable("t"),
 			},
 			{
 				type: jsPsychHtmlKeyboardResponse,
