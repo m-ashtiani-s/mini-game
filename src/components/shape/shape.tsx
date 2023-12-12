@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { areArraysEqual } from "../../utils/checkArrayEqual";
+import {motion} from 'framer-motion'
 
 interface Iprops {
 	numbers: number[][];
@@ -46,7 +47,7 @@ const Shape = ({ numbers }: Iprops) => {
 					width: "50px",
 					height: "50px",
 					border: "1px solid #000",
-					backgroundColor: clicked.includes(index) ? "green" : "white",
+					backgroundColor: clicked.includes(index) ? "#4ade80" : "white",
 					cursor: "pointer",
 				}}
 				onClick={() => cellClickHandler(index)}
@@ -59,7 +60,7 @@ const Shape = ({ numbers }: Iprops) => {
 			{showGrid ? (
 				<div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "5px" }}>{grid}</div>
 			) : (
-				<span>your score is: {score}</span>
+				<motion.span initial={{opacity:0,fontSize:"1px"}} animate={{opacity:1,fontSize:"24px"}} className="text-primary font-medium">your score is: {score}</motion.span>
 			)}
 		</>
 	);
