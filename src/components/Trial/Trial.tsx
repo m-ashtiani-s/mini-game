@@ -44,7 +44,7 @@ export function Trial({ testLevls }: IProps) {
 			},
 			{
 				type: jsPsychHtmlKeyboardResponse,
-				prompt: '<p class="salam">if shape is <b>asymetric</b>, press "a" key and if it is <b>symetric</b> press "b"</p>',
+				prompt: '<p class="salam">if shape is <b>asymetric</b>, press "a" key and if it is <b>symetric</b> press "s"</p>',
 				stimulus: function () {
 					const html = ReactDOMServer.renderToString(
 						<span>
@@ -53,7 +53,7 @@ export function Trial({ testLevls }: IProps) {
 					);
 					return html;
 				},
-				choices: ["a", "b"],
+				choices: ["a", "s"],
 				trial_duration: 2500,
 			},
 		],
