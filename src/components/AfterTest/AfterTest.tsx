@@ -5,7 +5,6 @@ interface Iprops{
   }
 
 function AfterTest({numbers}:Iprops) {
-	console.log(numbers)
 	return <div><Shape numbers={numbers} /></div>;
 }
 

@@ -1,7 +1,7 @@
-export function randomCells() {
+export function randomCells(testLevls:number) {
 	const result = [];
 
-	for (let i = 0; i < 6; i++) {
+	for (let i = 0; i < testLevls+1; i++) {
 		const subArray = new Set();
 
 		while (subArray.size <= i) {

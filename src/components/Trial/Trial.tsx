@@ -7,11 +7,28 @@ import { randomCells } from "../../utils/generateRandomCells";
 import Grid from "../grid/grid";
 import AfterTest from "../AfterTest/AfterTest";
 type Matrix = number[][];
+interface IProps {
+	testLevls: number;
+}
 
+interface variables{
+	image:string;
+	items:Matrix;
+	time:number
+}
 
-export function Trial() {
-	const uniqueArray = randomShapes();
-	const randomArrayOfArrays = randomCells();
+export function Trial({ testLevls }: IProps) {
+	const uniqueArray = randomShapes(testLevls);
+	const randomArrayOfArrays = randomCells(testLevls);
+	const vars:variables[] = [];
+	for (let i = 0; i < testLevls; i++) {
+		const vv = {
+			image: `./public/images/${uniqueArray[i].randomString}/${uniqueArray[i].randomNumber}.svg`,
+			items: randomArrayOfArrays[i],
+			time: (i===0 ? 2000 : 3*vars[i-1].time),
+		};
+		vars.push(vv as variables);
+	}
 
 	const jsPsych = initJsPsych();
 	const face_name_procedure = {
@@ -23,8 +40,7 @@ export function Trial() {
 					return html;
 				},
 				choices: "NO_KEYS",
-				trial_duration: 2000,
-				// trial_duration: jsPsych.timelineVariable("t"),
+				trial_duration: jsPsych.timelineVariable("time"),
 			},
 			{
 				type: jsPsychHtmlKeyboardResponse,
@@ -32,22 +48,16 @@ export function Trial() {
 				stimulus: function () {
 					const html = ReactDOMServer.renderToString(
 						<span>
-							<img src={jsPsych.timelineVariable("face")} alt="" />
+							<img src={jsPsych.timelineVariable("image")} alt="" />
 						</span>
 					);
 					return html;
 				},
-				choices: ['a','b'],
+				choices: ["a", "b"],
 				trial_duration: 2500,
 			},
 		],
-		timeline_variables: [
-			{ face: `./public/images/${uniqueArray[0].randomString}/${uniqueArray[0].randomNumber}.svg`, items: randomArrayOfArrays[0], t: 2000 },
-			{ face: `./public/images/${uniqueArray[1].randomString}/${uniqueArray[1].randomNumber}.svg`, items: randomArrayOfArrays[1], t: 6000 },
-			{ face: `./public/images/${uniqueArray[2].randomString}/${uniqueArray[2].randomNumber}.svg`, items: randomArrayOfArrays[2], t: 18000 },
-			{ face: `./public/images/${uniqueArray[3].randomString}/${uniqueArray[3].randomNumber}.svg`, items: randomArrayOfArrays[3], t: 46000 },
-			{ face: `./public/images/${uniqueArray[4].randomString}/${uniqueArray[4].randomNumber}.svg`, items: randomArrayOfArrays[4], t: 138000 },
-		],
+		timeline_variables: vars,
 	};
 
 	jsPsych.run([face_name_procedure]).then(() => {

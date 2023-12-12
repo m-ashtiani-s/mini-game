@@ -1,9 +1,11 @@
 import { ImageRandomTypes } from "../types/AllRandomData.types";
 
-export function randomShapes() {
+
+
+export function randomShapes(testLevls:number) {
 	const arrayOfObjects:ImageRandomTypes[]  = [];
 
-	while (arrayOfObjects.length < 5) {
+	while (arrayOfObjects.length < testLevls) {
 		const randomString = Math.random() < 0.5 ? "asymmetrical" : "symmetrical";
 		const randomNumber = Math.floor(Math.random() * 5) + 1;
 
